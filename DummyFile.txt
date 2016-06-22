@@ -1,1 +1,420 @@
 DummyFile from Sinchan
+
+Stack Exchange Inbox Reputation and Badges sign up log in tour help  
+
+Search Q&A
+
+Stack Overflow
+Questions
+ 
+Jobs
+ 
+Tags
+ 
+Users
+ 
+Badges
+ 
+Ask Question
+_ Stack Overflow is a community of 4.7 million programmers, just like you, helping each other. 
+
+Join them; it only takes a minute:
+
+Sign up
+Join the Stack Overflow community to:
+Ask programming questions Answer and help your peers Get recognized for your expertise
+How to create a file in Linux from terminal window?
+
+up vote
+133
+down vote
+favorite
+47
+What's the easiest way to create a file in Linux?
+
+linux bash file command-line-interface
+shareimprove this question
+edited Jan 29 '14 at 9:33
+
+Tshepang
+4,224105197
+asked Feb 21 '12 at 16:42
+
+raffian
+10.5k1352108
+  	 	
+I am bemused why mkfile doesn't really come recommended – Alex Mills May 11 '15 at 19:48
+add a comment
+12 Answers
+active oldest votes
+up vote
+190
+down vote
+accepted
+Depending on what you want the file to contain:
+
+touch /path/to/file for an empty file
+somecommand > /path/to/file for a file containing the output of some command.
+
+  eg: grep --help > randomtext.txt
+      echo "This is some text" > randomtext.txt
+nano /path/to/file or vi /path/to/file (or any other editor emacs,gedit etc)
+It either opens the existing one for editing or creates & opens the empty file to enter, if it doesn't exist
+
+shareimprove this answer
+edited Jul 30 '13 at 11:49
+
+Loves Probability
+1651212
+answered Feb 21 '12 at 16:44
+
+Eugen Rieck
+40.3k33558
+16	 	
+also, printf "some long message\nwith newlines\n" > file . Good luck to all. – shellter Feb 21 '12 at 16:50 
+1	 	
+UNIX is not a command line environment, but a family of (very different) OSes. That said: Yes, this should work on most Unices – Eugen Rieck Feb 21 '12 at 16:58
+3	 	
+touch will work in UNIX, because it's a standard tool. The somecommand example will work because it uses standard syntax. The nano sample may not work because an editor named nano may not be installed (nano is not standardized). The standard editor is ed and could be used in place of nano, or you could use $EDITOR to use your user- or system-configured default text editor, if there is one. – Sorpigal Feb 21 '12 at 17:16
+11	 	
+Additionally, you could simply say >/path/to/file to create an empty file, even if you don't have touch. – Sorpigal Feb 21 '12 at 17:17
+1	 	
+@EugenRieck What if it says permission denied – 123 Sep 30 '13 at 10:57
+show 2 more comments
+
+Did you find this question interesting? Try our newsletter
+
+Sign up for our newsletter and get our top new questions delivered to your inbox (see an example). 
+email address
+  Subscribe
+up vote
+41
+down vote
+Use touch
+
+touch filename
+shareimprove this answer
+answered Feb 21 '12 at 16:45
+
+Mariusz Jamro
+13.3k84581
+add a comment
+up vote
+23
+down vote
+Create the file using cat
+
+$ cat > myfile.txt
+
+Now, just type whatever you want in the file:
+
+Hello World!
+
+CTRL-D to save and exit
+
+shareimprove this answer
+edited Jan 27 '14 at 14:32
+answered Feb 21 '12 at 16:43
+
+raffian
+10.5k1352108
+add a comment
+up vote
+21
+down vote
+There are several possible solutions:
+
+Create an empty file
+touch file
+
+>file
+
+echo -n > file
+
+printf '' > file
+The echo version will work only if your version of echo supports the -n switch to suppress newlines. This is a non-standard addition. The other examples will all work in a POSIX shell.
+
+Create a file containing a newline and nothing else
+echo '' > file
+
+printf '\n' > file
+This is a valid "text file" because it ends in a newline.
+
+Write text into a file
+"$EDITOR" file
+
+echo 'text' > file
+
+cat > file <<END \
+text
+END
+
+printf 'text\n' > file
+These are equivalent. The $EDITOR command assumes that you have an interactive text editor defined in the EDITOR environment variable and that you interactively enter equivalent text. The cat version presumes a literal newline after the \ and after each other line. Other than that these will all work in a POSIX shell.
+
+Of course there are many other methods of writing and creating files, too.
+
+shareimprove this answer
+answered Feb 21 '12 at 17:35
+
+Sorpigal
+13.6k22952
+add a comment
+up vote
+12
+down vote
+Also, create an empty file:
+
+touch myfile.txt
+shareimprove this answer
+answered Feb 21 '12 at 16:44
+
+andreapier
+1,94712131
+add a comment
+up vote
+8
+down vote
+haha! it's easy! try this:
+
+$ touch filename
+shareimprove this answer
+answered Feb 21 '12 at 16:44
+
+Roman Newaza
+5,31342852
+  	 	
+This worked with sudo, so I was able to create new file in system folder. – Miss Lucy Apr 23 '15 at 20:43
+add a comment
+up vote
+4
+down vote
+You can use the touch command to create a new empty file.
+
+http://linux.about.com/library/cmd/blcmdl_touch.htm
+
+shareimprove this answer
+answered Feb 21 '12 at 16:46
+
+Andy Arismendi
+23.3k75277
+add a comment
+up vote
+3
+down vote
+I like the nano command-line editor (text):
+
+nano filename
+shareimprove this answer
+answered Nov 3 '14 at 9:58
+
+Sam Perry
+453414
+add a comment
+up vote
+3
+down vote
+How to create a text file on Linux:
+
+Using touch to create a text file: $ touch NewFile.txt
+Using cat to create a new file: $ cat NewFile.txt
+The file is created, but it's empty and still waiting for the input from the user. You can type any text into the terminal, and once done CTRL-D will close it, or CTRL-C will escape you out.
+Simply using > to create a text file: $ > NewFile.txt
+Lastly, we can use any text editor name and then create the file, such as:
+nano MyNewFile 
+ vi MyNewFile 
+ NameOfTheEditor NewFileName
+shareimprove this answer
+edited Dec 31 '15 at 21:10
+
+Chris Charabaruk
+3,0971750
+answered Dec 31 '15 at 21:00
+
+DATA SCIENCE
+311
+add a comment
+up vote
+2
+down vote
+In case you guys are trying to create a new file, but it says: 'File does not exist', it's simply because you are also accessing a directory, which does not exist yet. You have to create all non existent directories first, using the mkdir /path/to/dir command.
+
+shareimprove this answer
+answered Feb 19 '14 at 9:55
+
+JustBasti
+63921529
+add a comment
+up vote
+2
+down vote
+You can use touch command, as the others said:
+
+touch filename
+To write on file on command line, you can use echo or printf:
+
+echo "Foo" > filename
+printf "Foo" > filename
+Maybe you can have problems with permissions. If you are getting the following error: bash: filename: Permission denied, you need to use sudo bash -c 'echo "Foo" > filename', as described here: http://askubuntu.com/questions/103643/cannot-echo-hello-x-txt-even-with-sudo
+
+shareimprove this answer
+answered Oct 3 '15 at 19:15
+
+user3753202
+13629
+add a comment
+up vote
+1
+down vote
+This will create an empty file with the current timestamp
+
+touch filename
+
+shareimprove this answer
+answered Sep 17 '14 at 9:31
+
+Christy George
+319
+add a comment
+Your Answer
+
+
+ 
+Sign up or log in
+
+Sign up using Google
+Sign up using Facebook
+Sign up using Email and Password
+Post as a guest
+
+Name
+
+Email
+
+required, but never shown
+ Post Your Answer
+By posting your answer, you agree to the privacy policy and terms of service.
+
+Not the answer you're looking for?	Browse other questions tagged linux bash file command-line-interface or ask your own question.
+
+asked
+
+4 years ago
+
+viewed
+
+522907 times
+
+active
+
+3 months ago
+
+Workday
+Workday
+based in Pleasanton, CA
+
+Benefits
+ESPP and Retirement-Savings Plans
+Sports Teams and Clubs; Pool, Ping Pong and Foosball Competitions
+Wellness and Fitness Programs
+view company page
+Linked
+
+-3 List all the subdirectories inside a folder and save it into a file
+Related
+
+2285 How to check whether a file exists using Python
+193 Quickly create a large file on a Linux system?
+749 How to create a Java String from the contents of a file?
+1383 How do I tell if a regular file does not exist in bash?
+601 How to symlink a file in Linux?
+637 How to set chmod for a folder and all of its subfolders and files in Linux Ubuntu Terminal?
+21 Delete files with string found in file - linux cli
+6 Linux: create random directory/file hierarchy
+1187 Finding all files containing a text string on Linux
+1 How to remove linux end of line but leave windows line ending intact in bash?
+Hot Network Questions
+
+JSON: Cannot deserialize instance of date from VALUE_STRING
+Why did Uncle Jesse's last name change?
+How does an electron move through a metal or a semiconductor
+Dirty specks in cycles animation
+What is the word for always YES (100%) or always NO (0%), never in-between
+Is there any way to buy a new car directly from Toyota without going through a dealership?
+Extracting Values to Points without ArcGIS Spatial Analyst?
+Example of a continuous function with a discontinuous inverse
+Is there a math function to find an element in a vector?
+"[I]t literally scared her to death" - Why is "I" in brackets?
+Should I set wood fence posts in quikrete with no supplemental water?
+Turbo equivalent on electric motors
+Historical music
+Keylogger web application protection
+Is it possible to name a part of a command to reuse it in the same command later on?
+Can Greyhawk's dragons seriously not write?
+What does "steenking" mean?
+What does "gliss 2x" mean here?
+How do we know that Darth Plagueis was Sidious' master?
+Concerned about slow growth of my seedlings
+Transportation from St Pancras to Isle of Wight
+Why would Tywin Lannister allow Jaime to join the Kingsguard?
+How to enforce shoes removal in a lobby/house?
+Should I add redundant code now just in case it may be needed in the future?
+question feed
+about us tour help blog chat data legal privacy policy work here advertising info mobile contact us feedback
+TECHNOLOGY	LIFE / ARTS	CULTURE / RECREATION	SCIENCE	OTHER
+Stack Overflow
+Server Fault
+Super User
+Web Applications
+Ask Ubuntu
+Webmasters
+Game Development
+TeX - LaTeX
+Programmers
+Unix & Linux
+Ask Different (Apple)
+WordPress Development
+Geographic Information Systems
+Electrical Engineering
+Android Enthusiasts
+Information Security
+Database Administrators
+Drupal Answers
+SharePoint
+User Experience
+Mathematica
+Salesforce
+ExpressionEngine® Answers
+more (13)
+Photography
+Science Fiction & Fantasy
+Graphic Design
+Movies & TV
+Seasoned Advice (cooking)
+Home Improvement
+Personal Finance & Money
+Academia
+more (9)
+English Language & Usage
+Skeptics
+Mi Yodeya (Judaism)
+Travel
+Christianity
+Arqade (gaming)
+Bicycles
+Role-playing Games
+more (21)
+Mathematics
+Cross Validated (stats)
+Theoretical Computer Science
+Physics
+MathOverflow
+Chemistry
+Biology
+more (5)
+Stack Apps
+Meta Stack Exchange
+Area 51
+Stack Overflow Careers
+site design / logo © 2016 Stack Exchange Inc; user contributions licensed under cc by-sa 3.0 with attribution required
+rev 2016.3.30.3406
